@@ -1,0 +1,60 @@
+[project]
+name = "wqf7009-a3"
+version = "0.1.0"
+description = "Assignment 3: XAI on Chest X-Ray Pneumonia Detection"
+readme = "README.md"
+authors = [{ name = "hongjiaherng", email = "jiaherng2001@gmail.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    "grad-cam>=1.5.5",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.0",
+    "opencv-python>=4.11.0.86",
+    "pandas>=2.3.3",
+    "rich>=14.2.0",
+    "tensorboard>=2.20.0",
+    "torchsummary>=1.5.1",
+    "tqdm>=4.67.1",
+]
+
+[project.optional-dependencies]
+cpu = ["torch>=2.9.0", "torchvision>=0.24.0"]
+cu130 = ["torch>=2.9.0", "torchvision>=0.24.0"]
+
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "cu130" }]]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+torchvision = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu130", extra = "cu130" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[project.scripts]
+wqf7009-a3-train = "wqf7009_a3.main:main"
+wqf7009-a3-eval = "wqf7009_a3.eval:main"
+
+[build-system]
+requires = ["uv_build>=0.9.8,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
+    "ipywidgets>=8.1.8",
+    "ruff>=0.14.10",
+]
